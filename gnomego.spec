@@ -1,42 +1,51 @@
-#
-Summary:	Go board game frontend for Gnome
+Summary:	Go board game frontend for GNOME
+Summary(pl.UTF-8):	Interfejs GNOME do gry planszowej go
 Name:		gnomego
 Version:	0.5.1
 Release:	1
-License:	GPLv2
-Group:		Applications
+License:	GPL v2
+Group:		X11/Applications/Games
 Source0:	http://dl.sourceforge.net/gnomego/%{name}-%{version}.tar.gz
 # Source0-md5:	5a318f5cd17f758c4307fc33c57fc0ad
 URL:		http://gnomego.sourceforge.net/
-BuildArch: noarch
+BuildRequires:	python >= 1:2.5
+BuildRequires:	rpm-pythonprov
+Requires:	gnugo > 3.6
 Requires:	python-gnome-gconf
 Requires:	python-pyparsing
-Requires: gnugo > 3.6
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Go is an ancient east asian board game nowadays played all over the
-world. GnomeGo aims to bring all software a go player can think of to
-the gnome desktop.
+Go is an ancient East Asian board game nowadays played all over the
+world. GnomeGo aims to bring all software a Go player can think of to
+the GNOME desktop.
+
+%description -l pl.UTF-8
+Go to stara wschodnioazjatycka gra planszowa obecnie rozgrywana na
+całym świecie. Celem GnomeGo jest przeniesienie całego oprogramowania
+dla graczy w go do środowiska GNOME.
 
 %prep
 %setup -q
 
 %build
-python setup.py build
+%{__python} setup.py build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-python setup.py install --root=$RPM_BUILD_ROOT
 
-%find_lang gnomego --with-gnome
+%{__python} setup.py install \
+	--root=$RPM_BUILD_ROOT
+
+%find_lang %{name} --with-gnome
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS  TODO README
+%doc AUTHORS README TODO
 %attr(755,root,root) %{_bindir}/gnomego
 %attr(755,root,root) %{_bindir}/sgf-info
 %attr(755,root,root) %{_bindir}/sgf-thumbnailer
