@@ -61,6 +61,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gnomego/sgfs/games.zip
 %{_datadir}/mime/packages/gnomego.xml
 %{_pixmapsdir}/gnomego_64x64.png
-%{py_sitescriptdir}/gnomego-0.5.1-py2.5.egg-info
+%if "%{py_ver}" > "2.4"
+%{py_sitescriptdir}/gnomego-*.egg-info
+%endif
 %dir %{py_sitescriptdir}/gnomego
 %{py_sitescriptdir}/gnomego/*.py[co]
